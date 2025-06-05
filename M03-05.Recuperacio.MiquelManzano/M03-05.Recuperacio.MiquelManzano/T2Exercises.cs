@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection.Metadata;
+using System.Runtime.InteropServices;
+using System.Runtime.Serialization.Formatters;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -10,7 +12,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace M03_05.Recuperacio.MiquelManzano
 {
-    public class T2Exercises
+    public static class T2Exercises
     {
         const int Min = 0;
         const int Max = 100;
@@ -256,6 +258,218 @@ namespace M03_05.Recuperacio.MiquelManzano
             for (int i = 0; i <= 10; i++)
             {
                 Console.WriteLine($"{userNum} * {i} = {userNum*i}");
+            }
+        }
+
+        // Exercici 14
+        public static void NumsArray()
+        {
+            Console.Clear();
+            Console.WriteLine("T2 - Activitats: Exercici 14");
+
+            int[] nums = new int[5];
+            int total = 0;
+            
+            for (int i = 0; i < nums.Length; ++i)
+            {
+                nums[i] = UserInteraction.AskUserIntNumber(Min, Max);
+            }
+            Console.Write("Numeros introduits: ");
+            for (int i = 0; i <= nums.Length; ++i)
+            {
+                Console.Write(i);
+                total += i;
+            }
+
+            Console.WriteLine($"\nSuma de tots els numeros: {total}");
+        }
+
+        // Exercici 15
+        public static void SquaredNumTest()
+        {
+            Console.Clear();
+            Console.WriteLine("T2 - Activitats: Exercici 15");
+
+            int userNum = UserInteraction.AskUserIntNumber(Min, Max);
+            int result = SquaredNum(userNum);
+
+            Console.WriteLine($"El quadrat de {userNum} es: {result}");
+        }
+
+        public static int SquaredNum(int num)
+        {
+            return num * num;
+        }
+
+
+        // Exercici 16
+        public static void InputUserTest()
+        {
+            Console.Clear();
+            Console.WriteLine("T2 - Activitats: Exercici 16");
+
+            int userNum = UserInteraction.AskUserIntNumber(Min, Max); //Min i Max estan declarades com costants al principi de la clase, son 0 i 100.
+
+            Console.WriteLine($"El teu numero es: {userNum}");
+        }
+
+        // Exercici 17
+        public static void FindNumArray()
+        {
+            Console.Clear();
+            Console.WriteLine("T2 - Activitats: Exercici 17");
+
+            int[] nums = new int[5];
+
+            Console.WriteLine("Ompleix l'array:");
+
+            for (int i = 0; i < nums.Length; ++i)
+            {
+                nums[i] = UserInteraction.AskUserIntNumber(Min, Max);
+            }
+
+            Console.Write("Numero a buscar: ");
+            int numToFind = UserInteraction.AskUserIntNumber(Min, Max);
+            int position = 0;
+            bool find = false;
+
+            for (int i = 0; i < nums.Length; ++i)
+            {
+                if (numToFind == nums[i])
+                {
+                    find = true;
+                    position = i + 1;
+                }
+            }
+
+            Console.WriteLine(find ? $"El numero {numToFind} es a l'array en la possicio {position}" : $"El numero {numToFind} no es a l'array");
+        }
+
+        // Exercici 18
+        public static void InvertedStringArray()
+        {
+            Console.Clear();
+            Console.WriteLine("T2 - Activitats: Exercici 18");
+
+            string[] strs = new string[5];
+
+            Console.WriteLine("Ompleix l'array:");
+            for (int i = 0; i < strs.Length; ++i)
+            {
+                Console.WriteLine("Escriu alguna cosa:");
+                strs[i] = Console.ReadLine();
+            }
+
+            Console.Write("Ordre normal: ");
+            for (int i = 0; i < strs.Length; ++i)
+            {
+                Console.Write($" {strs[i]}");
+            }
+
+            Console.Write("\nOrdre invers: ");
+            for (int i = strs.Length - 1; i >= 0; --i)
+            {
+                Console.Write($" {strs[i]}");
+            }
+        }
+
+        // Exercici 19
+        public static void NumsSumTest()
+        {
+            Console.Clear();
+            Console.WriteLine("T2 - Activitats: Exercici 19");
+
+            int userNumber = UserInteraction.AskUserIntNumber(Min, Max);
+
+            Console.WriteLine($"La suma dels digits de {userNumber} es: {NumsSum(userNumber)}");
+        }
+
+        public static int NumsSum(int num)
+        {
+            int total = 0;
+
+            while (num != 0)
+            {
+                total += num % 10;
+                num /= 10;
+            }
+            return total;
+        }
+
+        // Exercici 20
+        public static void NumsStats()
+        {
+            Console.Clear();
+            Console.WriteLine("T2 - Activitats: Exercici 20");
+
+            int[] nums = new int[8];
+            for (int i = 0; i < 8; i++)
+            {
+                nums[i] = UserInteraction.AskUserIntNumber(Min, Max);
+            }
+
+            Console.WriteLine($"Màxim: {nums.Max()}");
+            Console.WriteLine($"Mínim: {nums.Min()}");
+            Console.WriteLine($"Mitjana: {nums.Average():F2}");
+        }
+
+        // Exercici 21
+        public static void Temperatures()
+        {
+            Console.Clear();
+            Console.WriteLine("T2 - Activitats: Exercici 21");
+
+            Console.Write("Enter temperature in Celsius: ");
+            double celsius = double.Parse(Console.ReadLine());
+
+            Console.WriteLine("Convert to:\n1. Fahrenheit\n2. Kelvin");
+            switch (UserInteraction.AskUserIntNumber(1, 2))
+            {
+                case 1:
+                    double fahrenheit = celsius * 9 / 5 + 32;
+                    Console.WriteLine($"{celsius}°C is {fahrenheit:F2}°F");
+                    break;
+                case 2:
+                    double kelvin = celsius + 273.15;
+                    Console.WriteLine($"{celsius}°C is {kelvin:F2}K");
+                    break;
+                default:
+                    Console.WriteLine("Error");
+                    break;
+            }
+        }
+
+        // Exercici 22
+        public static void Game()
+        {
+            Console.Clear();
+            Console.WriteLine("T2 - Activitats: Exercici 22");
+
+            Random random = new Random();
+            int secret = random.Next(1, 51); // Genera número entre 1 i 50
+            int input = 0;
+            int attempts = 0;
+
+            Console.WriteLine("Endevina el número entre 1 i 50!");
+
+            while (input != secret)
+            {
+                input = UserInteraction.AskUserIntNumber(1, 50);
+
+                attempts++;
+
+                if (input < secret)
+                {
+                    Console.WriteLine("Més alt!");
+                }
+                else if (input > secret)
+                {
+                    Console.WriteLine("Més baix!");
+                }
+                else
+                {
+                    Console.WriteLine($"Correcte! Has encertat en {attempts} intents.");
+                }
             }
         }
     }
